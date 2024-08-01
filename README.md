@@ -1,2 +1,3 @@
-# Cloud-FinalProject
-Django Clinic Management System 
+# Cloud Final Project
+
+Django Clinic management System
