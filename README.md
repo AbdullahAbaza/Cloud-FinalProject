@@ -34,3 +34,16 @@ sudo apt install libpq-dev python3-dev
 
 
 source venv/bin/activate
+
+# create .env file
+DATABASE_NAME=django_clinic_db
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres
+DATABASE_HOST=postgres_db
+DATABASE_PORT=5432
+DJANGO_SUPERUSER_USERNAME=bazoo
+DJANGO_SUPERUSER_EMAIL=bazoo@example.com
+DJANGO_SUPERUSER_PASSWORD=bazoo
+
+# production
+DATABASE_URL=postgres://postgres:postgres@postgres_db:5432/django_clinic_db
