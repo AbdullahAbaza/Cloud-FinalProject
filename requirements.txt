@@ -3,7 +3,6 @@ Django
 django-allauth
 django-crispy-forms
 crispy-bootstrap5
-django-heroku
 gunicorn
 Jinja2
 PyJWT
@@ -14,3 +13,4 @@ sqlparse
 urllib3
 whitenoise
 psycopg2
+python-dotenv
