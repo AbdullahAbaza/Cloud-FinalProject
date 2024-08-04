@@ -2,6 +2,7 @@ dj-database-url
 Django
 django-allauth
 django-crispy-forms
+crispy-bootstrap5
 django-heroku
 gunicorn
 Jinja2

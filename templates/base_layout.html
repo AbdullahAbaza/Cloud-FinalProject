@@ -6,19 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLINIC Management System</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
 </head>
-<body class="">
-<div class="container-fluid mt-5 mx-auto" style="background-color: black;">
+<body class="d-flex flex-column min-vh-100">
+<div class="container-fluid mt-5 mx-auto">
     {% include "navbar.html" %}
     {% block heading %}
     {% endblock heading %}
-    {% block content %}
-    {% endblock content %}
-
+    <div class="container-fluid">
+        {% block content %} 
+        {% endblock content %}
+    </div>
 </div>
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootsrap.min.js' %}"></script>
-
+{% include "footer.html"%}  
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
