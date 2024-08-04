@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+     - POSTGRES_DB=${DATABASE_NAME}
+     - POSTGRES_USER=${DATABASE_USER}
+     - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+    container_name: django_clinic
+    command: >
+      sh -c "
+      ./wait-for-it.sh postgres_db:5432 -- 
+      python manage.py migrate &&
+      python manage.py createsuperuser --noinput &&
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      gunicorn clinic.wsgi:application --bind 0.0.0.0:8000 --timeout 120
+      "
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres_db:5432/django_clinic_db
+      - DJANGO_SUPERUSER_USERNAME=bazoo
+      - DJANGO_SUPERUSER_EMAIL=bazoo@example.com
+      - DJANGO_SUPERUSER_PASSWORD=bazoo
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
