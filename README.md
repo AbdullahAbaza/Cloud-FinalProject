@@ -1,49 +1,81 @@
 # Cloud Final Project
 
-Django Clinic management System
+## Django Clinic Management System
 
+This project is a Django-based clinic management system designed to streamline the operations of a clinic, including patient management, appointment scheduling, and more.
 
-`sudo yum install python3-devel`
-Installs the necessary development headers (python3-devel) that are required to compile psycopg2 from source.
+## Table of Contents
 
+- [Cloud Final Project](#cloud-final-project)
+  - [Django Clinic Management System](#django-clinic-management-system)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+    - [Installation Steps](#installation-steps)
+  - [Configuration](#configuration)
+    - [Database Setup](#database-setup)
+    - [Configuration Files](#configuration-files)
+  - [Usage](#usage)
 
+## Installation
 
-database authentication;
+### Prerequisites
 
-user django_admin With Password 'Daf28876#@'
-database django_clinic_Db owner django_admin
+Before you begin, ensure you have met the following requirements:
 
+- You have a Linux machine (preferably Ubuntu or CentOS).
+- You have Python 3 installed.
+- You have PostgreSQL installed.
 
+### Installation Steps
 
+1. **Install Python Development Headers:**
 
-``` txt
-Open the pg_hba.conf file (usually located at /etc/postgresql/<version>/main/pg_hba.conf).
-Find the line that says local all postgres peer.
-Change peer to md5.
-Save the file.
-Restart PostgreSQL: sudo systemctl restart postgresql@<version>-main.service.
-```
+   ```sh
+   sudo yum install python3-devel
+   ```
 
-psql -U <username> -d django_todo -W
+2. **Install Required Packages:**
 
+   ```sh
+   pip3 install -r requirements.txt
+   ```
 
-pip3 install -r requirements.txt
+3. **Install PostgreSQL Development Libraries:**
 
+   ```sh
+   sudo apt install libpq-dev python3-dev
+   ```
 
-sudo apt install libpq-dev python3-dev
+## Configuration
 
+### Database Setup
 
-source venv/bin/activate
+1. **Database Authentication:**
 
-# create .env file
-DATABASE_NAME=django_clinic_db
-DATABASE_USER=postgres
-DATABASE_PASSWORD=postgres
-DATABASE_HOST=postgres_db
-DATABASE_PORT=5432
-DJANGO_SUPERUSER_USERNAME=bazoo
-DJANGO_SUPERUSER_EMAIL=bazoo@example.com
-DJANGO_SUPERUSER_PASSWORD=bazoo
+   - User: `django_admin`
+   - Password: `yourpassword`
+   - Database: `django_clinic_Db`
+   - Owner: `django_admin`
 
-# production
-DATABASE_URL=postgres://postgres:postgres@postgres_db:5432/django_clinic_db
+2. **Configure PostgreSQL:**
+
+   Open the `pg_hba.conf` file (usually located at `/etc/postgresql/<version>/main/pg_hba.conf`).
+
+   Find the line that says `local all postgres peer`.
+
+   Change `peer` to `md5`.
+
+   Save the file.
+
+   Restart PostgreSQL:
+
+   ```sh
+   sudo systemctl restart postgresql@<version>-main.service
+   ```
+
+### Configuration Files
+
+Ensure all necessary configuration files are properly set up. Refer to `installonec2.md` for additional steps.
+
+## Usage
