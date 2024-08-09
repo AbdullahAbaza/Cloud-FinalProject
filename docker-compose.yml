@@ -1,8 +1,14 @@
 version: '3.8'
 
+networks:
+  django-app-net:
+
+volumes:
+  postgres_data:
+
 services:
-  postgres:
-    image: postgres:15-alpine
+  db:
+    image: postgres:15
     container_name: postgres_db
     environment:
       - POSTGRES_DB=${DATABASE_NAME}
@@ -10,6 +16,13 @@ services:
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - django-app-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   web:
     build:
@@ -19,7 +32,7 @@ services:
       sh -c "
       ./wait-for-it.sh postgres_db:5432 -- 
       python manage.py migrate &&
-      python manage.py createsuperuser --noinput &&
+      python createsuperuser.py &&
       python manage.py makemigrations &&
       python manage.py migrate &&
       gunicorn clinic.wsgi:application --bind 0.0.0.0:8000 --timeout 120
@@ -30,11 +43,13 @@ services:
       - "8000:8000"
     environment:
       - DATABASE_URL=postgres://postgres:postgres@postgres_db:5432/django_clinic_db
-      - DJANGO_SUPERUSER_USERNAME=bazoo
-      - DJANGO_SUPERUSER_EMAIL=bazoo@example.com
-      - DJANGO_SUPERUSER_PASSWORD=bazoo
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
     depends_on:
-      - postgres
-
-volumes:
-  postgres_data:
+      db:
+        condition: service_healthy
+    networks:
+      - django-app-net
+    env_file:
+      - .env
